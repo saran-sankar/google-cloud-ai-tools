@@ -21,7 +21,7 @@ folder_names = [name for name in os.listdir(".") if os.path.isdir(name)]
 
 #Specify requirements
 bucket_name = input("\nBucket name: ")
-test_train_split_specified = 1 if 'y' == input("\nDo you want to specify train/test/validation split? ([y]es/[n]o): ") else 0
+test_train_split_specified = 1 if 'y' == input("\nDo you want to use train/test/validation split? ([y]es/[n]o): ") else 0
 
 if test_train_split_specified == 1:
     while train_split <= 0:
@@ -38,13 +38,13 @@ for class_label in folder_names:
 
     for image_file_name in image_files:
         
-        json_line = {"imageGcsUri": "gs://bucket/{}".format(bucket_name),
+        json_line = {"imageGcsUri": "gs://bucket/{}".format(bucket_name+"/"+class_label+"/"+image_file_name),
                      "classificationAnnotation": {"displayName": class_label}}
 
         if test_train_split_specified == 1:
             
             json_line["dataItemResourceLabels"] = {"aiplatform.googleapis.com/ml_use":
-                                                   random.choices(ml_uses, weights=(train_split, test_split, validation_split), k=3)}
+                                                   random.choices(ml_uses, weights=(train_split, test_split, validation_split))[0]}
             
         json_list.append(json_line)
 
