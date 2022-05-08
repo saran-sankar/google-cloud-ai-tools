@@ -3,7 +3,7 @@ import json
 import random
 
 """
-Program to create input JSON files for single label image classification dataset stored in folders based on labels.
+Program to create JSON import files for single label image classification dataset stored in folders based on labels.
 """
 
 bucket_name = ""
